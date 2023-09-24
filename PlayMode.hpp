@@ -1,3 +1,4 @@
+#include "GL.hpp"
 #include "Mode.hpp"
 
 #include "Scene.hpp"
@@ -7,6 +8,10 @@
 
 #include <vector>
 #include <deque>
+
+#include <hb.h>
+#include <hb-ft.h>
+#include <freetype/freetype.h>
 
 struct PlayMode : Mode {
 	PlayMode();
@@ -36,6 +41,11 @@ struct PlayMode : Mode {
 	glm::quat upper_leg_base_rotation;
 	glm::quat lower_leg_base_rotation;
 	float wobble = 0.0f;
+
+	GLuint VAO;
+	GLuint VBO;
+
+	void show_text(std::string text, glm::uvec2 const &drawable_size, float x, float y);
 
 	glm::vec3 get_leg_tip_position();
 

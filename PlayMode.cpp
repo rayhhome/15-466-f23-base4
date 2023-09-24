@@ -1,5 +1,7 @@
 #include "PlayMode.hpp"
 
+#include "ColorTextureProgram.hpp"
+#include "GL.hpp"
 #include "LitColorTextureProgram.hpp"
 
 #include "DrawLines.hpp"
@@ -8,9 +10,12 @@
 #include "gl_errors.hpp"
 #include "data_path.hpp"
 
+#include <cstdint>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <random>
+
+#define FONT_SIZE 72
 
 GLuint hexapod_meshes_for_lit_color_texture_program = 0;
 Load< MeshBuffer > hexapod_meshes(LoadTagDefault, []() -> MeshBuffer const * {
@@ -39,6 +44,157 @@ Load< Scene > hexapod_scene(LoadTagDefault, []() -> Scene const * {
 Load< Sound::Sample > dusty_floor_sample(LoadTagDefault, []() -> Sound::Sample const * {
 	return new Sound::Sample(data_path("dusty-floor.opus"));
 });
+
+void PlayMode::show_text(std::string text, glm::uvec2 const &drawable_size, float x, float y) {
+	glm::vec2 pos = glm::vec2(x, y);
+
+	FT_Library ft_library;
+  FT_Face ft_face;
+  FT_Error ft_error;
+
+	if ((ft_error = FT_Init_FreeType (&ft_library))) {
+		abort();
+	}
+	if ((ft_error = FT_New_Face(ft_library, data_path("Mooli-Regular.ttf").c_str(), 0, &ft_face))) {
+		abort();
+	}
+	if ((ft_error = FT_Set_Char_Size(ft_face, FONT_SIZE*64, FONT_SIZE*64, 0, 0))) {
+		abort();
+	}
+
+	hb_font_t *hb_font;
+	hb_font = hb_ft_font_create(ft_face, NULL);
+
+	hb_buffer_t *hb_buffer;
+	hb_buffer = hb_buffer_create();
+	hb_buffer_add_utf8(hb_buffer, text.c_str(), -1, 0, -1);
+	hb_buffer_guess_segment_properties(hb_buffer);
+
+	hb_shape(hb_font, hb_buffer, NULL, 0);
+
+	unsigned int len = hb_buffer_get_length(hb_buffer);
+	hb_glyph_info_t *info = hb_buffer_get_glyph_infos(hb_buffer, NULL);
+	hb_glyph_position_t *gly_pos = hb_buffer_get_glyph_positions(hb_buffer, NULL);
+
+  printf ("Raw buffer contents:\n");
+  for (unsigned int i = 0; i < len; i++)
+  {
+    hb_codepoint_t gid   = info[i].codepoint;
+    unsigned int cluster = info[i].cluster;
+    double x_advance = gly_pos[i].x_advance / 64.;
+    double y_advance = gly_pos[i].y_advance / 64.;
+    double x_offset  = gly_pos[i].x_offset / 64.;
+    double y_offset  = gly_pos[i].y_offset / 64.;
+
+    char glyphname[32];
+    hb_font_get_glyph_name (hb_font, gid, glyphname, sizeof (glyphname));
+
+    printf ("glyph='%s'	cluster=%d	advance=(%g,%g)	offset=(%g,%g)\n",
+            glyphname, cluster, x_advance, y_advance, x_offset, y_offset);
+  }
+
+  printf ("Converted to absolute positions:\n");
+  /* And converted to absolute positions. */
+  {
+    double current_x = 0;
+    double current_y = 0;
+    for (unsigned int i = 0; i < len; i++)
+    {
+      hb_codepoint_t gid   = info[i].codepoint;
+      unsigned int cluster = info[i].cluster;
+      double x_position = current_x + gly_pos[i].x_offset / 64.;
+      double y_position = current_y + gly_pos[i].y_offset / 64.;
+
+
+      char glyphname[32];
+      hb_font_get_glyph_name (hb_font, gid, glyphname, sizeof (glyphname));
+
+      printf ("glyph='%s'	cluster=%d	position=(%g,%g)\n",
+	      glyphname, cluster, x_position, y_position);
+
+      current_x += gly_pos[i].x_advance / 64.;
+      current_y += gly_pos[i].y_advance / 64.;
+    }
+  }
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);   
+
+	glUseProgram(color_texture_program->program);
+	glUniform3f(glGetUniformLocation(color_texture_program->program, "textColor"), 1.0f, 1.0f, 1.0f);
+  glActiveTexture(GL_TEXTURE0);
+  glBindVertexArray(VAO);
+
+	glm::mat4 projection = glm::ortho(0.0f, (float)drawable_size.x, 0.0f, (float)drawable_size.y);
+	glUniformMatrix4fv(glGetUniformLocation(color_texture_program->program, "projection"), 1, GL_FALSE, &projection[0][0]);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	for (uint32_t i = 0; i < len; i++) {
+		hb_codepoint_t glyph = info[i].codepoint;
+		FT_Load_Glyph(ft_face, glyph, FT_LOAD_RENDER);
+		FT_Render_Glyph(ft_face->glyph, FT_RENDER_MODE_NORMAL);
+
+		unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RED,
+        ft_face->glyph->bitmap.width,
+        ft_face->glyph->bitmap.rows,
+        0,
+        GL_RED,
+        GL_UNSIGNED_BYTE,
+        ft_face->glyph->bitmap.buffer
+    );
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		float w = static_cast<float>(ft_face->glyph->bitmap.width);
+    float h = static_cast<float>(ft_face->glyph->bitmap.rows);
+
+		float xpos = pos.x + ft_face->glyph->bitmap_left;
+    float ypos = pos.y + ft_face->glyph->bitmap_top - h;
+
+      // update VBO for each character
+      float vertices[6][4] = {
+          { xpos,     ypos + h,   0.0f, 0.0f },            
+          { xpos,     ypos,       0.0f, 1.0f },
+          { xpos + w, ypos,       1.0f, 1.0f },
+        
+				  { xpos,     ypos + h,   0.0f, 0.0f },
+          { xpos + w, ypos,       1.0f, 1.0f },
+          { xpos + w, ypos + h,   1.0f, 0.0f }           
+      };
+		// render glyph texture over quad
+    glBindTexture(GL_TEXTURE_2D, 0);
+    // update content of VBO memory
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); 
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // render quad
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+    pos += glm::vec2(gly_pos[i].x_advance >> 6, gly_pos[i].y_advance >> 6); // bitshift by 6 to get value in pixels in both x and y (2^6 = 64)
+	}
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
 
 PlayMode::PlayMode() : scene(*hexapod_scene) {
 	//get pointers to leg for convenience:
@@ -208,24 +364,25 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 
 	{ //use DrawLines to overlay some text:
 		glDisable(GL_DEPTH_TEST);
-		float aspect = float(drawable_size.x) / float(drawable_size.y);
-		DrawLines lines(glm::mat4(
-			1.0f / aspect, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		));
+		// float aspect = float(drawable_size.x) / float(drawable_size.y);
+		// DrawLines lines(glm::mat4(
+		// 	1.0f / aspect, 0.0f, 0.0f, 0.0f,
+		// 	0.0f, 1.0f, 0.0f, 0.0f,
+		// 	0.0f, 0.0f, 1.0f, 0.0f,
+		// 	0.0f, 0.0f, 0.0f, 1.0f
+		// ));
 
-		constexpr float H = 0.09f;
-		lines.draw_text("Mouse motion rotates camera; WASD moves; escape ungrabs mouse",
-			glm::vec3(-aspect + 0.1f * H, -1.0 + 0.1f * H, 0.0),
-			glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
-			glm::u8vec4(0x00, 0x00, 0x00, 0x00));
-		float ofs = 2.0f / drawable_size.y;
-		lines.draw_text("Mouse motion rotates camera; WASD moves; escape ungrabs mouse",
-			glm::vec3(-aspect + 0.1f * H + ofs, -1.0 + + 0.1f * H + ofs, 0.0),
-			glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
-			glm::u8vec4(0xff, 0xff, 0xff, 0x00));
+		// constexpr float H = 0.09f;
+		// lines.draw_text("Mouse motion rotates camera; WASD moves; escape ungrabs mouse",
+		// 	glm::vec3(-aspect + 0.1f * H, -1.0 + 0.1f * H, 0.0),
+		// 	glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
+		// 	glm::u8vec4(0x00, 0x00, 0x00, 0x00));
+		// float ofs = 2.0f / drawable_size.y;
+		// lines.draw_text("Mouse motion rotates camera; WASD moves; escape ungrabs mouse",
+		// 	glm::vec3(-aspect + 0.1f * H + ofs, -1.0 + + 0.1f * H + ofs, 0.0),
+		// 	glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
+		// 	glm::u8vec4(0xff, 0xff, 0xff, 0x00));
+		show_text("Hellojafjlkfjaofjaofiowfwhfofhwaefojfoajfjwfooifhwafwoi", drawable_size, 25.0f, 25.0f);
 	}
 	GL_ERRORS();
 }
