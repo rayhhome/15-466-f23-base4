@@ -22,15 +22,18 @@
 Text::Text(std::string const &filename) {
   //https://github.com/harfbuzz/harfbuzz-tutorial/blob/master/hello-harfbuzz-freetype.c
   //FreeType initialization
-  if ((ft_error = FT_Init_FreeType(&ft_library))) {
+  ft_error = FT_Init_FreeType(&ft_library);
+  if (ft_error) {
     std::cout << "Error: FreeType Library Initialization Failure" << std::endl;
 		abort();
 	}
-	if ((ft_error = FT_New_Face(ft_library, filename.c_str(), 0, &ft_face))) {
+  ft_error = FT_New_Face(ft_library, filename.c_str(), 0, &ft_face);
+	if (ft_error) {
 		std::cout << "Error: FreeType TypeFace Initialization Failure" << std::endl;
     abort();
 	}
-	if ((ft_error = FT_Set_Char_Size(ft_face, 0, DEFAULT_SIZE*64, 0, 0))) { // 72dpi
+  ft_error = FT_Set_Char_Size(ft_face, 0, DEFAULT_SIZE*64, 0, 0);
+	if (ft_error) { // 72dpi
     std::cout << "Error: FreeType Set Char Size Failure" << std::endl;
 		abort();
 	}
@@ -133,11 +136,13 @@ void Text::show_text(std::string text, glm::uvec2 const &drawable_size, float x,
 		hb_codepoint_t glyph = info[i].codepoint;
 
     //load and render glyphs
-		if ((ft_error = FT_Load_Glyph(ft_face, glyph, FT_LOAD_DEFAULT))) {
+    ft_error = FT_Load_Glyph(ft_face, glyph, FT_LOAD_DEFAULT);
+		if (ft_error) {
       std::cout << "Error: FreeType Load Glyph Failure" << std::endl;
       abort();
     }
-		if ((ft_error = FT_Render_Glyph(ft_face->glyph, FT_RENDER_MODE_NORMAL))) {
+    ft_error = FT_Render_Glyph(ft_face->glyph, FT_RENDER_MODE_NORMAL);
+		if (ft_error) {
       std::cout << "Error: FreeType Render Glyph Failure" << std::endl;
       abort();
     } 
