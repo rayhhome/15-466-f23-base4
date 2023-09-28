@@ -22,6 +22,10 @@ Press enter to select your choice.
 Press space to switch your choice.
 Choose wisely.
 Or just hit enter. 
+(Also, if things get desperate,
+press r to restart the game.
+Maybe the program is contradicting itself?
+Or its just another manifestation of its goal...)
 
 Sources: https://fonts.google.com/specimen/Mooli
 
