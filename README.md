@@ -5,27 +5,25 @@ Author: Sirui Huang, Sizhe Chen
 Design: Just Enter and you'll know.
 
 Text Drawing: 
+Text Drawing is realized by using harfbuzz buffers to read FreeType fonts, and rendering them using openGL using VBO. This process is realized through the newly created utility file Text.hpp and Text.cpp, along with the openGL program ColorTextProgram. You can instantiate a text writing object Text and use the function show_text to display text on your screen, in the size, color, and position you like.
 
-We create Text.cpp/Text.hpp to help with the rendering process of the texts. During init, we first turn ttf into glyph textures.
-Then, when we need to draw any text, it reads std::string and match the right texture to render at run time. 
-
-Choices: 
-
-Game choices are written and stored in txt file that follows a specific format. They are authored through our txt file editors.
-At runtime, when the player starts the game, the game will parse the story and turn it into a network of story components. 
-
+Choices: The choices are created using a txt file, where each state is encoded with a number, followed by lines of story, then followed by the two choices, which always begin with a number. The number represent the state the game will go to next. The game will read from this file and display the story and choices respective.
 
 Screen Shot:
 
-![Screen Shot](screenshot1.png)
+![Screen Shot](screenshot.png)
 
 How To Play:
 
-Space to toggle between choices. Enter to make the choice. R to restart.
+Top text is story.
+Yellow text is the focused choice.
+Black text is the unfocused choice.
+Press enter to select your choice.
+Press space to switch your choice.
+Choose wisely.
+Or just hit enter. 
 
-Sources: 
-
-Assets are created on our
+Sources: https://fonts.google.com/specimen/Mooli
 
 This game was built with [NEST](NEST.md).
 
