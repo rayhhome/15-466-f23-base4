@@ -11,7 +11,6 @@ ColorTextureProgram::ColorTextureProgram() {
 		//vertex shader:
 		"#version 330\n"
 		"uniform mat4 OBJECT_TO_CLIP;\n"
-		"uniform mat4 projection;\n"
 		"in vec4 Position;\n"
 		"in vec4 Color;\n"
 		"in vec2 TexCoord;\n"
@@ -26,7 +25,6 @@ ColorTextureProgram::ColorTextureProgram() {
 		//fragment shader:
 		"#version 330\n"
 		"uniform sampler2D TEX;\n"
-		"uniform vec3 textColor;\n"
 		"in vec4 color;\n"
 		"in vec2 texCoord;\n"
 		"out vec4 fragColor;\n"

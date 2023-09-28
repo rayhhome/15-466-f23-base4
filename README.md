@@ -1,10 +1,12 @@
-# (TODO: your game's title)
+# Just ENTER the Game
 
 Author: Sirui Huang, Sizhe Chen
 
-Design: (TODO: In two sentences or fewer, describe what is new and interesting about your game.)
+Design: Just Enter and you'll know.
 
-Text Drawing: (TODO: how does the text drawing in this game work? Is text precomputed? Rendered at runtime? What files or utilities are involved?)
+Text Drawing: 
+
+(TODO: how does the text drawing in this game work? Is text precomputed? Rendered at runtime? What files or utilities are involved?)
 
 Choices: (TODO: how does the game store choices and narrative? How are they authored? Anything nifty you want to point out?)
 

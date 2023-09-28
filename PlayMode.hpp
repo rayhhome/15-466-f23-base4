@@ -3,15 +3,23 @@
 
 #include "Scene.hpp"
 #include "Sound.hpp"
+#include "Text.hpp"
 
 #include <glm/glm.hpp>
 
 #include <vector>
 #include <deque>
 
-#include <hb.h>
-#include <hb-ft.h>
-#include <freetype/freetype.h>
+struct choice{
+		std::string text;
+		int jump;
+	};
+
+struct story{
+		std::string text;
+		choice First;
+		choice Second;
+};
 
 struct PlayMode : Mode {
 	PlayMode();
@@ -24,35 +32,32 @@ struct PlayMode : Mode {
 
 	//----- game state -----
 
+	std::vector<story> parseStory();
+
 	//input tracking:
 	struct Button {
 		uint8_t downs = 0;
 		uint8_t pressed = 0;
-	} left, right, down, up;
+	} space, enter, reset;
 
 	//local copy of the game scene (so code can change it during gameplay):
 	Scene scene;
 
-	//hexapod leg to wobble:
-	Scene::Transform *hip = nullptr;
-	Scene::Transform *upper_leg = nullptr;
-	Scene::Transform *lower_leg = nullptr;
-	glm::quat hip_base_rotation;
-	glm::quat upper_leg_base_rotation;
-	glm::quat lower_leg_base_rotation;
-	float wobble = 0.0f;
+	//text
+	Text *text = nullptr;
 
-	GLuint VAO;
-	GLuint VBO;
+	std::vector <story> storyLine = {};
 
-	void show_text(std::string text, glm::uvec2 const &drawable_size, float x, float y);
+	std::string mainText = "";
+	std::string choice1Text = "";
+	std::string choice2Text = "";
 
-	glm::vec3 get_leg_tip_position();
+	int curStory = 0;
+	int curChoice = 0;
 
-	//music coming from the tip of the leg (as a demonstration):
-	std::shared_ptr< Sound::PlayingSample > leg_tip_loop;
-	
-	//camera:
-	Scene::Camera *camera = nullptr;
+	int extraEnter = 0;
 
+	glm::vec3 main_color     = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 choice_color_1 = glm::vec3(1.0f, 0.984f, 0.0f);
+  glm::vec3 choice_color_2 = glm::vec3(0.0f, 0.0f, 0.0f);
 };

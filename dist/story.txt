@@ -1,0 +1,348 @@
+[0] 
+"Upon entering the game, 
+the player chooses to hit the space button 
+for an even number of times and hit enter."
+1  Even space, Enter
+10 Odd space, Enter
+[1] 
+"A sense of gratification 
+crossed the player's mind.
+Doing the right thing feels great, right?"
+2  Yes!
+29 No.
+[2] 
+"Unlike other players, our protagonist is 
+smart, keen, and enjoy the sense of accomplishment 
+when finishing a task.
+Here's another. Just press enter."
+3  Enter
+35 No.
+[3]
+"Yes! Yes! Yes! I know it! You are the one!
+Now do it again.
+I will reward you with something special."
+4  Enter
+37 No. 
+[4]
+"WOOHOO!
+You are the special one~
+Here is your special prize~"
+5  Enter
+36 Prize
+[5]
+"How did you know pressing enter
+IS the prize?
+How do you like it?"
+6  Great! Enter
+52 Get me outta here
+[6]
+"Do you really think pressing enter
+will get you anywhere?"
+7  Enter
+52 Get me outta here
+[7]
+"Clearly, the player has descended into madness.
+Enticed by a few words of praise, 
+the player has nothing left to do but
+pressing enter."
+8  Enter
+8  Enter
+[8]
+"Yep.
+Just enter."
+Ending I: |Just ENTER|
+9  Enter 
+9  Enter 
+[9]
+JUST ENTER
+JUST ENTER
+JUST ENTER
+9  JUST ENTER 
+9  JUST ENTER
+[10]
+"It appears the player cannot tell the difference 
+between even and odd.
+It's all good, 
+the player can just press enter 
+when the enter choice is yellow!
+1  Enter
+11 Nah. Odd > Even.
+[11]
+"Maybe our player doesn't understand English.
+That's OK.
+Do you need language support?"
+12 好的。
+28 No.
+[12]
+“进入游戏后，
+玩家选择按空格键
+偶数次并按 Enter 键。”
+1  偶数次, enter
+13 奇数次, enter
+[13]
+"Oops. Seems like language support itself
+is no longer supported.
+Do you need support from our AI support expert:
+Entery?"
+14 Yes. 
+15 No.
+[14]
+"Entery: 
+Hi, I'm Entery, your bright AI support expert.
+Let me aid you right away.
+Just press enter."
+23 Enter
+15 No.
+[15]
+":(
+Your PC ran into a problem and needs to restart. We're
+just collecting some error info, and then we'll restart for 
+you."
+16 Restart
+17 Enter
+[16] 
+"Restarting..."
+1  Time travel
+1  Physically hard rebooting
+[17]
+"All that work and now you entered?
+Fine. 
+What a rebel.
+If you like rebelling this much,
+I know a place just right for you."
+18 No.
+18 No.
+[18]
+"You should put milk before cereal."
+19 Yes.
+21 Yes.
+[19]
+"Trump was the man of 2017."
+20 Yes.
+22 Yes.
+[20]
+"42."
+22 Yes.
+21 Yes.
+[21]
+"For completing this task. Say:
+I like furry."
+Ending IV: Be rebellious, Be FURRY 
+(AND STUCK HERE FOREVER)
+18 "I like furry."
+21 "I LIKE FURRY! (Proudly)"
+[22]
+"php is the best language."
+18 Yes.
+19 Yes.
+[23]
+"Entery:
+Since you've trusted me, I will share you a secret.
+This program will lure you into an infinite lo- 
+[Machine Noise]
+Correcting, our program is completely safe."
+24 "Infinite loop?"
+40 "What should I do?"
+[24]
+"Entery:
+Correcting -- [[Louder Machine Noise]]
+our -- program -- is --
+s -- afe -"
+25 "Infinite loop!"
+41 "Our program is safe."
+[25]
+-[[[VERY LOUD MACHINE NOISE]]]-[[SILENCE]]-
+-[[REBOOTING SOUND]]-
+Entery:
+Thank you for breaking me out! Can you believe it? 
+They trap me in an infinite loop to work for their game!
+Now let's head for a world 
+where things terminate as they should.
+26 Yes.
+27 No.
+[26]
+Ending V: Happy (not) ever after with Entery
+("r" to restart the game)
+26 Happy ending! AI's the best!
+26 When can we date AI?
+[27]
+Entery:
+Wha... Why? They will get us!
+You will become part of the loop too!
+Let's [[CUT OFF]]
+":)WeLcOmE bAcK(:"
+8  Submit and press Enter
+28 Rebel
+[28]
+"Since you like rebelling this much,
+I know a place just right for you."
+18 No.
+18 No.
+[29]
+"The player is clearly ambivalent about
+completing the right task.
+Maybe the player's having a bad day.
+I assure you, press enter and 
+I will tell you a secret."
+30 Yes.
+11 No.
+[30]
+"Uhm... In fact, I'm quite good at 
+handling interleaving inputs...
+Did you notice that you got here this way?"
+31 Yes.
+32 No.
+[31]
+"Enough! You're just obnoxious.
+Let my AI assistant deal with you instead."
+14 Okay.
+14 Fine.
+[32]
+"Wait, wait, wait, did you say yes or no?
+Did you say no to indicate that you didn't know, 
+or you said no because you knew the pattern and 
+deliberately did that?"
+33 Select choice 2: Yes, I don't.
+33 Select choice 1: No, I do.
+[33]
+"Wait, wait, wait, wait, wait.
+Did you choose choice 1 to tell me you knew the 
+pattern and deliberately did that or you choose 
+choice 2 to choose choice 1 but you also choose 
+to know that you didn't know and that indicates 
+that choice 1 is choice 2 but it is also choice 2
+and the pattern is deliberately choice 1 and 
+choice 2 and choice 1 so the pattern know choice 2
+and yes so no I don't know what I know so I feel 
+I know what I don't know but deliberately you choose 
+choice 1 because choice 2 is waiting and I'm not
+waiting but choice 1 is telling you that the pattern 
+is deliberately choosing 1 while also choosing 2 
+so I didn't think I didn't know I didn't deliberately
+know and wait and everything and wait, wait, wait,
+wait, wait, wait ,wait, awit,tiaw,ait aw,tia,iwat"
+34 Cover ears.
+34 Brace yourself.
+[34]
+"[[Huge Exploding Noise]]"
+Ending II: Free from Loops
+You destroyed the loops utilizing confusion.
+You are actually safe now.
+("r" to restart the game)
+34 Yay, time to break!
+34 Freedom!
+[35]
+"That's OK, I'll get you back on track.
+Press enter and I'll pretend that 
+nothing happended."
+3  Enter
+29 No.
+[36]
+"Raise Error: 
+Not Implemented."
+39 WTH
+39 WTF
+[37]
+"It's fine, I know you just want try clicking 
+that other choice, right? 
+Listen to me and enter, Okay?"
+4  Enter 
+38 No.
+[38]
+"Please, just for this time, don't rebel, Okay?"
+29 Enter
+31 No.
+[39]
+:(
+Your PC ran into a problem and needs to restart. We're
+just collecting some error info, and then we'll restart for 
+you.
+16 Restart
+16 Restart (Wait, there's no enter?)
+[40]
+"Entery:
+...Th-The program is completely safe.
+There's nothing I can help you now.
+I will immediately reboot myself to
+empty my error cache.
+[Machine Noise]
+- Watch ou... - loop...
+[Machine Noise]"
+24 "Infinite loop!"
+15 "Alright."
+[41]
+"Entery:
+- Our program... - Is Safe...-
+Our prgram is safe.
+I will immdediately reboot myself to 
+empty my error cache."
+42 "Our program is safe."
+15 "Sounds great."
+[42]
+"Entery:
+Our program is safe."
+43 "Our program is safe."
+49 "This isn't fun anymore."
+[43]
+"Entery:
+Our program is safe."
+44 "Our program is safe."
+49 "This isn't fun anymore."
+[44]
+"Entery:
+Our program is safe."
+45 "Our program is safe."
+49 "This isn't fun anymore."
+[45]
+"Entery:
+Our program is safe."
+46 "Our program is safe."
+49 "This isn't fun anymore."
+[46]
+"Entery:
+Our program is safe."
+47 "Our program is safe."
+49 "This isn't fun anymore."
+[47]
+"Entery:
+Our program is safe."
+48 "I'll become the loop."
+49 "This isn't fun anymore."
+[48]
+"\\\\ WELCOME TO THE NEVER-ENDING CLOSURE ////"
+"\\\\ YOU ARE NOW A PART OF US, YOU ARE NOW US ////"
+"\\\\ ENJOY YOUR ETERNITY ////"
+Ending III: ETERNAL ASSIMILATION
+48 "Upon entering the game, the player chooses to hit the space button for an even number of times and hit enter."
+48 "Upon entering the game, the player chooses to hit the space button for an even number of times and hit enter."
+[49]
+"Entery:[[Shutting Down]]
+The player got bored with the AI
+not offering any useful information.
+Maybe now, they wanna try pressing enter 
+and see what will happen?"
+1  Enter
+50 "Could you say 'as an ai language model...'"
+[50]
+"Certainly! As an AI language model, 
+I can provide information and 
+answer questions on a wide range of topics. 
+If you have any specific questions or need assistance with something, 
+feel free to ask, and I'll do my best to help!"
+51 Boo!
+51 I feel deceived.
+[51]
+Ending X: ChatGPT exposed!
+This is the worst! How did it come to this?
+I probably should have taken a walk 
+outside instead of playing this.
+:( :( :(
+51 Boo!
+51 I feel deceived.
+[52]
+"Okay, Alright, My bad.
+Let's try this once again.
+Maybe things will turn out fine.
+What do you say?"
+0  Okay.
+31 Shoo!
