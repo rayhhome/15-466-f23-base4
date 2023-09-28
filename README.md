@@ -6,19 +6,26 @@ Design: Just Enter and you'll know.
 
 Text Drawing: 
 
-(TODO: how does the text drawing in this game work? Is text precomputed? Rendered at runtime? What files or utilities are involved?)
+We create Text.cpp/Text.hpp to help with the rendering process of the texts. During init, we first turn ttf into glyph textures.
+Then, when we need to draw any text, it reads std::string and match the right texture to render at run time. 
 
-Choices: (TODO: how does the game store choices and narrative? How are they authored? Anything nifty you want to point out?)
+Choices: 
+
+Game choices are written and stored in txt file that follows a specific format. They are authored through our txt file editors.
+At runtime, when the player starts the game, the game will parse the story and turn it into a network of story components. 
+
 
 Screen Shot:
 
-![Screen Shot](screenshot.png)
+![Screen Shot](screenshot1.png)
 
 How To Play:
 
-(TODO: describe the controls and (if needed) goals/strategy.)
+Space to toggle between choices. Enter to make the choice. R to restart.
 
-Sources: (TODO: list a source URL for any assets you did not create yourself. Make sure you have a license for the asset.)
+Sources: 
+
+Assets are created on our
 
 This game was built with [NEST](NEST.md).
 
