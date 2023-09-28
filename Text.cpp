@@ -106,25 +106,25 @@ void Text::show_text(std::string text, glm::uvec2 const &drawable_size, float x,
 
   // if x is less than 0, choose the position base on log2, as in a heap structure
   if (x < 0.0f) {
-    int param = -floor(x);
+    int param = -static_cast<int>(floor(x));
     x = 0.0f;
     for (uint32_t i = 0; i < len; i++) {
-      x += (gly_pos[i].x_advance >> 6) * scale;
+      x += static_cast<float>((gly_pos[i].x_advance >> 6)) * scale;
     }
     // choose the center position
-    int level = pow(2, 1 + floor(log2(param)));
-    x = ((param % (level / 2)) * 2 + 1) * ((DRAW_WIDTH) / (float)(level)) - x / 2.0f;
+    int level = static_cast<int>(pow(2, 1 + floor(log2(param))));
+    x = static_cast<float>((param % (level / 2)) * 2 + 1) * ((DRAW_WIDTH) / (float)(level)) - x / 2.0f;
   }
   
   if (y < 0.0f) {
-    int param = -floor(y);
+    int param = -static_cast<int>(floor(y));
     y = 0.0f;
     for (uint32_t i = 0; i < len; i++) {
-      y += (gly_pos[i].y_advance >> 6) * scale;
+      y += static_cast<float>((gly_pos[i].y_advance >> 6)) * scale;
     }
     // choose the center position
-    int level = pow(2, 1 + floor(log2(param)));
-    y = ((param % (level / 2)) * 2 + 1) * ((DRAW_HEIGHT) / (float)(level)) - y / 2.0f;
+    int level = static_cast<int>(pow(2, 1 + floor(log2(param))));
+    y = static_cast<float>((param % (level / 2)) * 2 + 1) * ((DRAW_HEIGHT) / (float)(level)) - y / 2.0f;
   }
 
   //render all glyphs
