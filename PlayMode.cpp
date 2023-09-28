@@ -188,18 +188,18 @@ std::vector<story> PlayMode::parseStory(){
 	
 	std::string line;
 	story newStory;
-	std::string text;
+	std::string cur_text;
 	while (std::getline(infile, line)){
 
 		if (line.substr(0,1) == "["){
 			newStory = {};
 		} 
 		else if (isdigit(line[0]) == false){
-			text+=line;
-			text+="\n";
+			cur_text+=line;
+			cur_text+="\n";
 		}else{
-			newStory.text = text;
-			text = "";
+			newStory.text = cur_text;
+			cur_text = "";
 			
 			
 			newStory.First.jump = std::stoi(line.substr(0,2));
