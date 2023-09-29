@@ -24,6 +24,10 @@ Load< Sound::Sample > dusty_floor_sample(LoadTagDefault, []() -> Sound::Sample c
 	return new Sound::Sample(data_path("dusty-floor.opus"));
 });
 
+Load< Text > text_display(LoadTagDefault, []() -> Text const * {
+	return new Text(data_path("Mooli-Regular.ttf"));
+});
+
 PlayMode::PlayMode() : scene() {
 
 	//added stuff
@@ -36,18 +40,6 @@ PlayMode::PlayMode() : scene() {
 	mainText = storyLine[0].text;
 	choice1Text = storyLine[0].First.text;
 	choice2Text = storyLine[0].Second.text;
-
-	// for(auto stuff : storyLine){
-	// 	std::printf("Follow this command: %s \n", stuff.text.c_str());
-	// }
-
-	//start music loop playing:
-	// (note: position will be over-ridden in update())
-
-	// leg_tip_loop = Sound::loop(*dusty_floor_sample, 1.0f, get_leg_tip_position(), 10.0f);
-
-	text = new Text(data_path("Mooli-Regular.ttf"));
-
 }
 
 PlayMode::~PlayMode() {
@@ -167,11 +159,11 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
     std::string line;
     float y = 630.0f;
     while (std::getline(iss, line, '\n')){
-        text->show_text(line, drawable_size, -1.0f, y, extraEnter+2.0f, main_color);
+        text_display->show_text(line, drawable_size, -1.0f, y, extraEnter+2.0f, main_color);
 				y -= 60.0f;
     }
-		text->show_text(choice1Text, drawable_size, -1.0f, 200.0f, extraEnter+2.0f, choice_color_1);
-		text->show_text(choice2Text, drawable_size, -1.0f, 100.0f, extraEnter+2.0f, choice_color_2);
+		text_display->show_text(choice1Text, drawable_size, -1.0f, 200.0f, extraEnter+2.0f, choice_color_1);
+		text_display->show_text(choice2Text, drawable_size, -1.0f, 100.0f, extraEnter+2.0f, choice_color_2);
 	}
 	GL_ERRORS();
 }

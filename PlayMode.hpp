@@ -43,9 +43,6 @@ struct PlayMode : Mode {
 	//local copy of the game scene (so code can change it during gameplay):
 	Scene scene;
 
-	//text
-	Text *text = nullptr;
-
 	std::vector <story> storyLine = {};
 
 	std::string mainText = "";
